@@ -1,0 +1,12 @@
+.idea
+*.iml
+out
+gen
+WebRoot/WEB-INF/classes
+src/main/webapp/WEB-INF/log
+src/main/webapp/WEB-INF/lib
+target/
+.classpath
+.project
+.settings/
+
