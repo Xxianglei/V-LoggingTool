@@ -11,10 +11,10 @@ import java.util.Date;
  * @Company: venusgroup
  * @Date: 2020/6/2 14:04
  * @Version 1.0
- * 前端请求日志实体封装
+ * 请求日志持久化对象
  */
 @TableName("mylog")
-public class RequestLogDo {
+public class RequestLogDO {
 
     @TableId("flowId")
     private String flowId;

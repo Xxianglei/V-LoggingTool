@@ -1,7 +1,7 @@
 package com.xianglei.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.xianglei.domain.RequestLogDo;
+import com.xianglei.domain.RequestLogDO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
  * 日志持久化mapper
  */
 @Repository
-public interface LogMapper extends BaseMapper<RequestLogDo> {
+public interface LogMapper extends BaseMapper<RequestLogDO> {
 }

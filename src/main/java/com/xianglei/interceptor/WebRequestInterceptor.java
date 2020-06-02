@@ -2,7 +2,7 @@ package com.xianglei.interceptor;
 
 import com.alibaba.fastjson.JSON;
 import com.xianglei.annotation.VLogHunter;
-import com.xianglei.domain.RequestLogVo;
+import com.xianglei.domain.RequestLogVO;
 import com.xianglei.service.LogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class WebRequestInterceptor implements HandlerInterceptor {
                 logger.info("该方法不存在该注解！");
             } else {
                 Map<String, String[]> params = request.getParameterMap();
-                RequestLogVo rle = new RequestLogVo();
+                RequestLogVO rle = new RequestLogVO();
                 rle.setRequestCategory(vLogHunter.method().toString());
                 rle.setRequestDesc(vLogHunter.description());
                 rle.setRequestParams(JSON.toJSONString(params));

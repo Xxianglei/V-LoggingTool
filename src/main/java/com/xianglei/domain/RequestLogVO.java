@@ -6,7 +6,7 @@ package com.xianglei.domain;
  * @Version 1.0
  * 前端请求日志实体封装
  */
-public class RequestLogVo {
+public class RequestLogVO {
 
 	private String requestUrl;
 

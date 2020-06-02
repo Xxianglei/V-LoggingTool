@@ -1,6 +1,6 @@
 package com.xianglei.service;
 
-import com.xianglei.domain.RequestLogVo;
+import com.xianglei.domain.RequestLogVO;
 
 public interface LogService {
 	/**
@@ -8,5 +8,5 @@ public interface LogService {
 	 * @param requestLogVo 请求数据封装vo
 	 * @return Boolean
 	 */
-	Boolean addLog(RequestLogVo requestLogVo) ;
+	Boolean addLog(RequestLogVO requestLogVo) ;
 }

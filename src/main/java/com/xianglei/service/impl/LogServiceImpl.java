@@ -1,8 +1,8 @@
 package com.xianglei.service.impl;
 
 import cn.hutool.core.date.DateTime;
-import com.xianglei.domain.RequestLogDo;
-import com.xianglei.domain.RequestLogVo;
+import com.xianglei.domain.RequestLogDO;
+import com.xianglei.domain.RequestLogVO;
 import com.xianglei.mapper.LogMapper;
 import com.xianglei.service.LogService;
 import org.slf4j.Logger;
@@ -30,9 +30,9 @@ public class LogServiceImpl implements LogService {
 
     @Transactional
     @Override
-    public Boolean addLog(RequestLogVo requestLogVo) {
+    public Boolean addLog(RequestLogVO requestLogVo) {
         logger.info("审计日志持久化到数据库");
-        RequestLogDo requestLogDo = new RequestLogDo();
+        RequestLogDO requestLogDo = new RequestLogDO();
         requestLogDo.setCreateDate(DateTime.now());
         requestLogDo.setFlowId(UUID.randomUUID().toString());
         requestLogDo.setRequestCategory(requestLogVo.getRequestCategory());
