@@ -21,6 +21,11 @@
 		<mybatis-plus.version>3.3.2</mybatis-plus.version>
 	</properties>
 	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 		<!--   自动配置,那些条件注解才可以使用,最好设置为 optional 为 true 不往下传递-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
