@@ -5,8 +5,8 @@ import com.xianglei.constant.AuditLogTypeEnum;
 import com.xianglei.constant.CommonResponse;
 import com.xianglei.constant.ErrCodeEnum;
 import com.xianglei.constant.VLogHunter;
-import com.xianglei.entity.HoneypotAuditLog;
-import com.xianglei.service.HoneypotAuditLogService;
+import com.xianglei.entity.AuditLog;
+import com.xianglei.service.AuditLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -34,7 +34,7 @@ import java.lang.reflect.Method;
 @Component
 public class AuditLogAspect {
     @Autowired
-    HoneypotAuditLogService logService;
+    AuditLogService logService;
     /**
      * 线程内部变量隔离
      */
@@ -83,27 +83,27 @@ public class AuditLogAspect {
             AuditLogTypeEnum auditLogTypeEnum = vLogHunter.logType();
             String logType = auditLogTypeEnum.getMsg();
             // 封装日志实体
-            HoneypotAuditLog honeypotAuditLog = new HoneypotAuditLog();
-            honeypotAuditLog.setLoginIp(USER_IP_LOCAL.get());
-            honeypotAuditLog.setLogType(logType);
-            honeypotAuditLog.setUserName(USER_NAME_LOCAL.get());
-            honeypotAuditLog.setOperationTime(operateTime);
+            AuditLog auditLog = new AuditLog();
+            auditLog.setLoginIp(USER_IP_LOCAL.get());
+            auditLog.setLogType(logType);
+            auditLog.setUserName(USER_NAME_LOCAL.get());
+            auditLog.setOperationTime(operateTime);
             if (rc != null) {
                 String details = vLogHunter.description();
                 int code = rc.getCode();
                 String module = vLogHunter.module().toString();
                 // 如果是全局异常中注入则直接获取异常信息   XXX操作失败xxx错误
                 if (VLogHunter.Module.ControllerAdvice.toString().equals(module)) {
-                    honeypotAuditLog.setDetails(details + FAILS + rc.getMsg());
+                    auditLog.setDetails(details + FAILS + rc.getMsg());
                 } else {
                     // 注入模块的功能描述信息  xxx操作成功/失败
                     if (code == ErrCodeEnum.SUCCESS.getCode()) {
-                        honeypotAuditLog.setDetails(details + SUCCESS);
+                        auditLog.setDetails(details + SUCCESS);
                     } else {
-                        honeypotAuditLog.setDetails(details + FAILS);
+                        auditLog.setDetails(details + FAILS);
                     }
                 }
-                logService.save(honeypotAuditLog);
+                logService.saveLocalOrMysqlOrMQ(auditLog);
             }
         } catch (Exception e) {
             log.error("Error occured while auditing, cause by: ", e);

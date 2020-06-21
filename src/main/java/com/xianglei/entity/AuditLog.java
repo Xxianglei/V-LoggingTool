@@ -18,7 +18,7 @@ import java.util.Date;
  */
 @Data
 @TableName(value = "honeypot_audit_log")
-public class HoneypotAuditLog implements Serializable {
+public class AuditLog implements Serializable {
     private static final long serialVersionUID = 6961827819124668744L;
     /**
      * 流水id

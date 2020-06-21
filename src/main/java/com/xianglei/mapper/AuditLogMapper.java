@@ -1,7 +1,7 @@
 package com.xianglei.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.xianglei.entity.HoneypotAuditLog;
+import com.xianglei.entity.AuditLog;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -12,5 +12,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @Description:审计日志持久层
  */
 @Mapper
-public interface HoneypotAuditLogMapper extends BaseMapper<HoneypotAuditLog> {
+public interface AuditLogMapper extends BaseMapper<AuditLog> {
 }
