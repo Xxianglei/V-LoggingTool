@@ -1,2 +1,2 @@
 #∆Ù∂Ø◊‘∂Ø≈‰÷√
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.xianglei.config.DataSourceConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.xianglei.config.C3p0DataSourceAutoConfiguration
