@@ -1,6 +1,8 @@
 package com.xianglei.util;
 
 
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import com.xianglei.constant.OsDefaultEnum;
 import org.apache.commons.lang3.StringUtils;
 
@@ -26,6 +28,7 @@ import java.util.List;
  */
 public class FileUtils {
 
+    public static final long HOURS24 = 24 * 60 * 60 * 1000L;
 
     /**
      * 获取文件列表
@@ -346,13 +349,30 @@ public class FileUtils {
 
 
     /**
-     * 字符串写入到文件
+     * 字符串写入到文件 24 小时内日志在同一个文件
      *
-     * @param content  字符串内容
-     * @param filePath 路径
-     * @param append   true是往文件后追加，false是覆盖
+     * @param content        字符串内容
+     * @param filePath       路径
+     * @param append         true是往文件后追加，false是覆盖
      */
     public static void writeContentToFile(String content, String filePath, boolean append) {
+        // 获取最后一个分割线的下表
+        int lastIndexOf = filePath.lastIndexOf(File.separator);
+        String tempPath = filePath.substring(0, lastIndexOf);
+        List<File> fileList = getFileList(tempPath, false);
+        for (File file : fileList) {
+            String absolutePath = file.getAbsolutePath();
+            String fileCreateTime = getFileCreateTime(absolutePath);
+            // 当前时间
+            DateTime createTime = DateUtil.parse(fileCreateTime);
+            long oldFileTime = createTime.toTimestamp().getTime();
+            DateTime nowDateTime = DateTime.now();
+            long newFileTime = nowDateTime.toTimestamp().getTime();
+            if (newFileTime - oldFileTime <= HOURS24) {
+                filePath = absolutePath;
+                break;
+            }
+        }
         File file = new File(filePath);
         try {
             if (!file.exists()) {
@@ -406,9 +426,6 @@ public class FileUtils {
             while ((line = br.readLine()) != null) {
                 if (line.endsWith(suffix)) {
                     startTime = line.substring(0, 17);
-                    startTime = startTime.replace("/", "");
-                    startTime = startTime.replace(":", "");
-                    startTime = startTime.replace(" ", "");
                     break;
                 }
             }
@@ -498,11 +515,11 @@ public class FileUtils {
         // 获取操作系统名称
         String osName = SystemRecognizeUtils.getOSName().toLowerCase();
         if (osName.startsWith(OsDefaultEnum.WINDOWS.getInfo())) {
-            if (StringUtils.isEmpty(storeFilePath)||StringUtils.equals("",storeFilePath)){
+            if (StringUtils.isEmpty(storeFilePath) || StringUtils.equals("", storeFilePath)) {
                 storeFilePath = OsDefaultEnum.WINDOWS.getPath();
             }
         } else {
-            if (StringUtils.isEmpty(storeFilePath)||StringUtils.equals("",storeFilePath)){
+            if (StringUtils.isEmpty(storeFilePath) || StringUtils.equals("", storeFilePath)) {
                 storeFilePath = OsDefaultEnum.LINUX.getPath();
             }
         }

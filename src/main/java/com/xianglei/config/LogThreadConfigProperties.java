@@ -1,7 +1,6 @@
 package com.xianglei.config;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,14 +13,19 @@ import org.springframework.context.annotation.Configuration;
  */
 @Data
 @Configuration
-@ConfigurationProperties("v-log")
+@ConfigurationProperties("v-log.thread")
 public class LogThreadConfigProperties {
-
-    @Value("${v-log.file.core-size:2}")
-    private int corePoolSize;
-    @Value("${v-log.thread.max-size:4}")
-    private int maxPoolSize;
-    @Value("${v-log.thread.queue-size:50}")
-    private int queueCapacity;
+    /**
+     * 核心线程数
+     */
+    private int corePoolSize = Runtime.getRuntime().availableProcessors() * 2 + 1;
+    /**
+     * 最大线程数
+     */
+    private int maxPoolSize = corePoolSize;
+    /**
+     * 队列大小
+     */
+    private int queueCapacity = Runtime.getRuntime().availableProcessors() * 20;
 
 }

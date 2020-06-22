@@ -1,7 +1,6 @@
 package com.xianglei.config;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,32 +19,27 @@ import org.springframework.context.annotation.Configuration;
  */
 @Data
 @Configuration
-@ConfigurationProperties("v-log")
+@ConfigurationProperties("v-log.file")
 public class LogCommonConfigProperties {
     /**
      * 文件存储默认关闭
      */
-    @Value("${v-log.file.open:false}")
-    private boolean fileOpen;
+    private boolean fileOpen=false;
     /**
      * 文件存储路径  默认跟目录的logs文件夹
      */
-    @Value("${v-log.file.storeFilePath:C:\\logs}")
-    private String storeFilePath;
+    private String storeFilePath="C:\\logs";
     /**
      * 文件命名格式 默认年月日时分秒
      */
-    @Value("${v-log.file.nameFormat:yyyyMMddHHmmss}")
-    private String nameFormat;
+    private String nameFormat="yyyyMMddHHmmss";
     /**
      * 文件格式  默认.txt
      */
-    @Value("${v-log.file.nameFormat:.txt}")
-    private String extName;
+    private String extName=".txt";
     /**
      * 消息队列是否开启  默认关闭
      */
-    @Value("${v-log.rocketmq.open:false}")
     private boolean mqOpen = false;
 
 

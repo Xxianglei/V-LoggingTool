@@ -11,6 +11,7 @@ import com.xianglei.service.AuditLogService;
 import com.xianglei.util.FileUtils;
 import com.xianglei.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
@@ -28,15 +29,14 @@ import java.io.File;
 @Slf4j
 @Service
 public class AuditLogServiceImpl extends ServiceImpl<AuditLogMapper, AuditLog> implements AuditLogService {
+    @Value("${rocketmq.producer.topic:v-log-topic}")
+    private String topic;
     @Autowired
     LogCommonConfigProperties logCommonConfigProperties;
     @Autowired
     AuditLogMapper auditLogMapper;
-    /* @Autowired
-     RocketMQTemplate rocketMQTemplate;*/
-    @Value("${rocketmq.producer.topic:v-log-topic}")
-    private String topic;
-
+    @Autowired
+    RocketMQTemplate rocketMQTemplate;
     // 异步调用
     @Async
     @Override
@@ -54,7 +54,7 @@ public class AuditLogServiceImpl extends ServiceImpl<AuditLogMapper, AuditLog> i
 
     }
 
-    // TODO 文件拓展名 以及 文件内容格式化
+    // TODO 文件拓展名
     public void transToLocalFileSystem(AuditLog auditLog) {
         String fileNameFormat = logCommonConfigProperties.getNameFormat();
         String storeFilePath = logCommonConfigProperties.getStoreFilePath();
@@ -71,9 +71,8 @@ public class AuditLogServiceImpl extends ServiceImpl<AuditLogMapper, AuditLog> i
                 .append("操作时间:").append(auditLog.getOperationTime()).append("\n");
         FileUtils.writeContentToFile(content.toString(), storeFilePath, true);
     }
-
     public void transToMQ(AuditLog auditLog) {
         String json = JsonUtils.toJson(auditLog);
-        /*        rocketMQTemplate.sendOneWay(topic, json);*/
+        rocketMQTemplate.sendOneWay(topic, json);
     }
 }
