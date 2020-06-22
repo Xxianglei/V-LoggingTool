@@ -21,7 +21,7 @@ public class LogAsyncConfiguration implements AsyncConfigurer {
     @Autowired
     LogThreadConfigProperties logThreadConfigProperties;
 
-    @Bean(name = "VLogThreadPool")
+    @Bean
     public Executor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(logThreadConfigProperties.getCorePoolSize());
