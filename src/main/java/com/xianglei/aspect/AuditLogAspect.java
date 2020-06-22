@@ -15,6 +15,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -33,7 +34,7 @@ import java.lang.reflect.Method;
 @Slf4j
 @Aspect
 @Component
-@Order(Integer.MIN_VALUE)
+@Order(Ordered.LOWEST_PRECEDENCE)
 public class AuditLogAspect {
     @Autowired
     AuditLogService logService;
