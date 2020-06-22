@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @Company:
  * @Date: 2020/6/15 15:18
  * com.sys.honeypot.mapper
- * @Description:审计日志持久层
+ * @Description:日志持久层
  */
 @Mapper
 public interface AuditLogMapper extends BaseMapper<AuditLog> {

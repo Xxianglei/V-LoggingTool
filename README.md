@@ -2,7 +2,7 @@
 
 > 目前只是一个Demo，还不是一个可以依赖的类库，最近会去逐渐实现并总结如何写一个类库。
 
-该项目是针对开发中的一个审计日志业务模块的一个简单实现。其基于Aop实现使用SpringBoot自动配置功能来实现开箱即用的目标。
+该项目是针对开发中的一个日志业务模块的一个简单实现。其基于Aop实现使用SpringBoot自动配置功能来实现开箱即用的目标。
 <br>该类库目的是对用户访问操作进行日志记录/分发。
 <br>借此打算就抽离出业务做一个类库开发的案例。
 
@@ -21,7 +21,7 @@
 
 ### 已实现
 
-@VLogHunter(logType = AuditLogTypeEnum.ACCOUNT_MANAGE, description = "审计日志列表查看操作", name = "审计日志列表查看")<br>
+@VLogHunter(logType = AuditLogTypeEnum.ACCOUNT_MANAGE, description = "日志列表查看操作", name = "日志列表查看")<br>
 
 可使用@VLogHunter注解在Controller或全局异常处理方法中，进行用户访问访问日志的生成和存储。
 

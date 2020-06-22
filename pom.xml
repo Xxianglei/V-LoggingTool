@@ -6,7 +6,7 @@
     <version>1.0.0</version>
     <name>V-LogUtil</name>
     <packaging>jar</packaging>
-    <description>审计日志，用户访问记录</description>
+    <description>日志工具，记录用户访问记录</description>
 
     <!-- Spring Boot Parent配置 -->
     <parent>

@@ -51,5 +51,4 @@ public class AuditLog implements Serializable {
      */
     @TableField(value = "operation_time")
     private Date operationTime;
-
 }

@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @auther: Xianglei
- * @Company: venusGroup
+ * @Company:
  * @Date: 2020/6/22 09:42
  * com.xianglei.config
  * @Description:

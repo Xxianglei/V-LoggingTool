@@ -10,10 +10,12 @@ package com.xianglei.constant;
 public enum AuditLogTypeEnum {
 
     ACCOUNT_MANAGE("账户管理"),
-    WARNING_LOG("告警日志");
+    WARNING_LOG("告警日志"),
+    COMMON_LOG("公共日志");
+
     private String msg;
 
-    private AuditLogTypeEnum(String msg) {
+    AuditLogTypeEnum(String msg) {
         this.msg = msg;
     }
 

@@ -1,5 +1,7 @@
 package com.xianglei.constant;
 
+import org.springframework.core.annotation.AliasFor;
+
 import java.lang.annotation.*;
 
 /**
@@ -24,29 +26,37 @@ public @interface VLogHunter {
 
     /**
      * 可以默认缺省
+     *
      * @return
      */
+    @AliasFor("description")
     String name() default "";
 
     /**
      * 请求方式
+     *
      * @return
      */
     MethodType method() default MethodType.GET;
 
     /**
      * 日志类型
+     *
      * @return
      */
-    AuditLogTypeEnum logType() default AuditLogTypeEnum.ACCOUNT_MANAGE;
+    AuditLogTypeEnum logType() default AuditLogTypeEnum.COMMON_LOG;
+
     /**
-     * 操作描述信息   格式：XXX操作
+     * 操作描述信息   格式：XXX 操作
+     *
      * @return
      */
+    @AliasFor("name")
     String description() default "";
 
     /**
      * 注解使用模块  默认 CONTROLLER及控制层使用，使用ControllerAdvice/CONTROLLER会影响最终生成的操作详情描述信息
+     *
      * @return
      */
     Module module() default Module.CONTROLLER;

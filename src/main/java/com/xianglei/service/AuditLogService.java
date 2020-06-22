@@ -8,7 +8,7 @@ import com.xianglei.entity.AuditLog;
  * @Company:
  * @Date: 2020/6/15 15:15
  * com.sys.honeypot.service
- * @Description：审计日志业务层
+ * @Description：日志业务层
  */
 public interface AuditLogService extends IService<AuditLog> {
 

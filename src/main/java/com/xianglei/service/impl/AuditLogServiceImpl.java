@@ -24,11 +24,12 @@ import java.io.File;
  * @Company:
  * @Date: 2020/6/15 15:16
  * com.sys.honeypot.service.impl
- * @Description:审计日志业务实现层面
+ * @Description:日志业务实现层面
  */
 @Slf4j
 @Service
 public class AuditLogServiceImpl extends ServiceImpl<AuditLogMapper, AuditLog> implements AuditLogService {
+
     @Value("${rocketmq.producer.topic:v-log-topic}")
     private String topic;
     @Autowired
@@ -63,7 +64,7 @@ public class AuditLogServiceImpl extends ServiceImpl<AuditLogMapper, AuditLog> i
         String extName = logCommonConfigProperties.getExtName();
         storeFilePath = storeFilePath + File.separator + DateUtil.format(new DateTime(), fileNameFormat) + extName;
         StringBuilder content = new StringBuilder();
-        content.append("id:").append(auditLog.getFlowId()).append("  ")
+        content.append("ID:").append(auditLog.getFlowId()).append("  ")
                 .append("访问者:").append(auditLog.getUserName()).append("  ")
                 .append("访问IP:").append(auditLog.getLoginIp()).append("  ")
                 .append("日志类型:").append(auditLog.getLogType()).append("  ")
