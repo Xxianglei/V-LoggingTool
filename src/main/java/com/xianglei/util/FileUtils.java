@@ -1,6 +1,9 @@
 package com.xianglei.util;
 
 
+import com.xianglei.constant.OsDefaultEnum;
+import org.apache.commons.lang3.StringUtils;
+
 import javax.swing.*;
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -22,8 +25,6 @@ import java.util.List;
  * 文件操作工具类
  */
 public class FileUtils {
-
-
 
 
     /**
@@ -62,7 +63,7 @@ public class FileUtils {
      * @param strPath 路径
      * @return
      */
-    public static  List<File> getFolderList(String strPath) {
+    public static List<File> getFolderList(String strPath) {
         List<File> folderList = new ArrayList<File>();
         File dir = new File(strPath);
         // 该文件目录下文件全部放入数组
@@ -362,7 +363,6 @@ public class FileUtils {
             out.flush();
             out.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             System.out.println("Content writing failed!");
             e.printStackTrace();
         }
@@ -486,5 +486,28 @@ public class FileUtils {
             selectPath = chooser.getSelectedFile().getPath();
         }
         return selectPath;
+    }
+
+    /**
+     * 根据系统获取默认/设置的路径并且创建
+     *
+     * @param storeFilePath
+     * @return
+     */
+    public static String getOsInfoAndMkdir(String storeFilePath) {
+        // 获取操作系统名称
+        String osName = SystemRecognizeUtils.getOSName().toLowerCase();
+        if (osName.startsWith(OsDefaultEnum.WINDOWS.getInfo())) {
+            if (StringUtils.isEmpty(storeFilePath)||StringUtils.equals("",storeFilePath)){
+                storeFilePath = OsDefaultEnum.WINDOWS.getPath();
+            }
+        } else {
+            if (StringUtils.isEmpty(storeFilePath)||StringUtils.equals("",storeFilePath)){
+                storeFilePath = OsDefaultEnum.LINUX.getPath();
+            }
+        }
+        // 根据路径判断是否存在  不存在就创建该存储路径
+        FileUtils.createDir(storeFilePath);
+        return storeFilePath;
     }
 }

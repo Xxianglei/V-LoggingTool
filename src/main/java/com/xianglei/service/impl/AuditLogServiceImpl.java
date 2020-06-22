@@ -9,9 +9,14 @@ import com.xianglei.entity.AuditLog;
 import com.xianglei.mapper.AuditLogMapper;
 import com.xianglei.service.AuditLogService;
 import com.xianglei.util.FileUtils;
+import com.xianglei.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
 
 /**
  * @Auther: Xianglei
@@ -27,7 +32,13 @@ public class AuditLogServiceImpl extends ServiceImpl<AuditLogMapper, AuditLog> i
     LogCommonConfigProperties logCommonConfigProperties;
     @Autowired
     AuditLogMapper auditLogMapper;
+    /* @Autowired
+     RocketMQTemplate rocketMQTemplate;*/
+    @Value("${rocketmq.producer.topic:v-log-topic}")
+    private String topic;
 
+    // 异步调用
+    @Async
     @Override
     public void saveLocalOrMysqlOrMQ(AuditLog auditLog) {
         boolean fileOpen = logCommonConfigProperties.isFileOpen();
@@ -43,16 +54,26 @@ public class AuditLogServiceImpl extends ServiceImpl<AuditLogMapper, AuditLog> i
 
     }
 
-    //TODO 文件拓展名 以及 文件内容格式化
+    // TODO 文件拓展名 以及 文件内容格式化
     public void transToLocalFileSystem(AuditLog auditLog) {
         String fileNameFormat = logCommonConfigProperties.getNameFormat();
         String storeFilePath = logCommonConfigProperties.getStoreFilePath();
+        storeFilePath = FileUtils.getOsInfoAndMkdir(storeFilePath);
+        // 选择文件扩展名
         String extName = logCommonConfigProperties.getExtName();
-        storeFilePath = storeFilePath + DateUtil.format(new DateTime(), fileNameFormat) + extName;
-        FileUtils.writeContentToFile(auditLog.toString(), storeFilePath, true);
+        storeFilePath = storeFilePath + File.separator + DateUtil.format(new DateTime(), fileNameFormat) + extName;
+        StringBuilder content = new StringBuilder();
+        content.append("id:").append(auditLog.getFlowId()).append("  ")
+                .append("访问者:").append(auditLog.getUserName()).append("  ")
+                .append("访问IP:").append(auditLog.getLoginIp()).append("  ")
+                .append("日志类型:").append(auditLog.getLogType()).append("  ")
+                .append("日志详情:").append(auditLog.getDetails()).append("  ")
+                .append("操作时间:").append(auditLog.getOperationTime()).append("\n");
+        FileUtils.writeContentToFile(content.toString(), storeFilePath, true);
     }
 
     public void transToMQ(AuditLog auditLog) {
-
+        String json = JsonUtils.toJson(auditLog);
+        /*        rocketMQTemplate.sendOneWay(topic, json);*/
     }
 }

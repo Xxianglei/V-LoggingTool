@@ -1,10 +1,9 @@
 package com.xianglei.config;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @Auther: Xianglei
@@ -20,9 +19,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * ...
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ConfigurationProperties(prefix = "v-log")
+@Configuration
+@ConfigurationProperties("v-log")
 public class LogCommonConfigProperties {
     /**
      * 文件存储默认关闭
@@ -32,7 +30,7 @@ public class LogCommonConfigProperties {
     /**
      * 文件存储路径  默认跟目录的logs文件夹
      */
-    @Value("${v-log.file.storeFilePath:/logs}")
+    @Value("${v-log.file.storeFilePath:C:\\logs}")
     private String storeFilePath;
     /**
      * 文件命名格式 默认年月日时分秒
@@ -40,7 +38,7 @@ public class LogCommonConfigProperties {
     @Value("${v-log.file.nameFormat:yyyyMMddHHmmss}")
     private String nameFormat;
     /**
-     * 文件格式  默认.xml
+     * 文件格式  默认.txt
      */
     @Value("${v-log.file.nameFormat:.txt}")
     private String extName;
