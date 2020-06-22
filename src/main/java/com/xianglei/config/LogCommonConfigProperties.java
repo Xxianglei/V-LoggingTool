@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Data
 @Configuration
-@ConfigurationProperties("v-log.file")
+@ConfigurationProperties("v-log")
 public class LogCommonConfigProperties {
     /**
      * 文件存储默认关闭
