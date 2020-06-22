@@ -17,7 +17,6 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @Description:
  */
 @Configuration
-
 public class LogAsyncConfiguration implements AsyncConfigurer {
     @Autowired
     LogThreadConfigProperties logThreadConfigProperties;
