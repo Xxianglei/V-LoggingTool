@@ -38,8 +38,9 @@ public class AuditLogServiceImpl extends ServiceImpl<AuditLogMapper, AuditLog> i
     AuditLogMapper auditLogMapper;
     @Autowired
     RocketMQTemplate rocketMQTemplate;
+
     // 异步调用
-    @Async
+    @Async("VLogThreadPool")
     @Override
     public void saveLocalOrMysqlOrMQ(AuditLog auditLog) {
         boolean fileOpen = logCommonConfigProperties.isFileOpen();
@@ -72,6 +73,7 @@ public class AuditLogServiceImpl extends ServiceImpl<AuditLogMapper, AuditLog> i
                 .append("操作时间:").append(auditLog.getOperationTime()).append("\n");
         FileUtils.writeContentToFile(content.toString(), storeFilePath, true);
     }
+
     public void transToMQ(AuditLog auditLog) {
         String json = JsonUtils.toJson(auditLog);
         rocketMQTemplate.sendOneWay(topic, json);
