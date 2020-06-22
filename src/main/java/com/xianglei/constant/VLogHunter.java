@@ -1,7 +1,5 @@
 package com.xianglei.constant;
 
-import org.springframework.core.annotation.AliasFor;
-
 import java.lang.annotation.*;
 
 /**
@@ -29,7 +27,6 @@ public @interface VLogHunter {
      *
      * @return
      */
-    @AliasFor("description")
     String name() default "";
 
     /**
@@ -51,7 +48,6 @@ public @interface VLogHunter {
      *
      * @return
      */
-    @AliasFor("name")
     String description() default "";
 
     /**

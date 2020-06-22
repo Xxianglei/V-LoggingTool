@@ -17,7 +17,7 @@ import java.util.Date;
  * @Description:日志实体
  */
 @Data
-@TableName(value = "honeypot_audit_log")
+@TableName(value = "audit_log")
 public class AuditLog implements Serializable {
     private static final long serialVersionUID = 6961827819124668744L;
     /**
