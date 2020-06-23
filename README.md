@@ -7,7 +7,7 @@ V-LoggingTool 1.0版本，基于自动配置和AOP技术，实现低侵入的用
 该仓库目的主要意义是在于小白学习和实现小项目快速开发。
 
 - 开箱即用，满足一般场景日志系统需求
-- 提供基于SpringBoot自动配置手写start案例
+- 提供基于SpringBoot自动配置手写starter案例
 - 提供Aop在日志拦截系统场景中的使用案例
 - 提供SpringBoot异步线程池使用案例
 - 提供SpringBoot集成MyBatis-Plus使用案例
