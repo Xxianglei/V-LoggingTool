@@ -42,7 +42,7 @@ public class AuditLogServiceImpl extends ServiceImpl<AuditLogMapper, AuditLog> i
     // 异步调用
     @Async("VLogThreadPool")
     @Override
-    public void saveLocalOrMysqlOrMQ(AuditLog auditLog) {
+    public void saveLocalOrMysqlOrMQ(AuditLog auditLog){
         boolean fileOpen = logCommonConfigProperties.isFileOpen();
         boolean mqOpen = logCommonConfigProperties.isMqOpen();
         // 存到数据库
@@ -56,22 +56,27 @@ public class AuditLogServiceImpl extends ServiceImpl<AuditLogMapper, AuditLog> i
 
     }
 
-    // TODO 文件拓展名
+    // TODO 多文件拓展名支持
     public void transToLocalFileSystem(AuditLog auditLog) {
         String fileNameFormat = logCommonConfigProperties.getNameFormat();
         String storeFilePath = logCommonConfigProperties.getStoreFilePath();
-        storeFilePath = FileUtils.getOsInfoAndMkdir(storeFilePath);
-        // 选择文件扩展名
-        String extName = logCommonConfigProperties.getExtName();
-        storeFilePath = storeFilePath + File.separator + DateUtil.format(new DateTime(), fileNameFormat) + extName;
-        StringBuilder content = new StringBuilder();
-        content.append("ID:").append(auditLog.getFlowId()).append("  ")
-                .append("访问者:").append(auditLog.getUserName()).append("  ")
-                .append("访问IP:").append(auditLog.getLoginIp()).append("  ")
-                .append("日志类型:").append(auditLog.getLogType()).append("  ")
-                .append("日志详情:").append(auditLog.getDetails()).append("  ")
-                .append("操作时间:").append(auditLog.getOperationTime()).append("\n");
-        FileUtils.writeContentToFile(content.toString(), storeFilePath, true);
+        try {
+            storeFilePath = FileUtils.getOsInfoAndMkdir(storeFilePath);
+            // 选择文件扩展名
+            String extName = logCommonConfigProperties.getExtName();
+            storeFilePath = storeFilePath + File.separator + DateUtil.format(new DateTime(), fileNameFormat) + extName;
+            StringBuilder content = new StringBuilder();
+            content.append("ID:").append(auditLog.getFlowId()).append("  ")
+                    .append("访问者:").append(auditLog.getUserName()).append("  ")
+                    .append("访问IP:").append(auditLog.getLoginIp()).append("  ")
+                    .append("日志类型:").append(auditLog.getLogType()).append("  ")
+                    .append("日志详情:").append(auditLog.getDetails()).append("  ")
+                    .append("操作时间:").append(auditLog.getOperationTime()).append("\n");
+            FileUtils.writeContentToFile(content.toString(), storeFilePath, true);
+        }catch (RuntimeException e){
+            log.error("Error in local file store {}",e);
+        }
+
     }
 
     public void transToMQ(AuditLog auditLog) {

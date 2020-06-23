@@ -1,5 +1,6 @@
 package com.xianglei.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * com.xianglei.config
  * @Description:
  */
+@Slf4j
 @Configuration
 public class LogAsyncConfiguration implements AsyncConfigurer {
     @Autowired
@@ -23,6 +25,7 @@ public class LogAsyncConfiguration implements AsyncConfigurer {
 
     @Bean(name = "VLogThreadPool")
     public Executor taskExecutor() {
+        log.info("Start initializing thread pool......");
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(logThreadConfigProperties.getCorePoolSize());
         executor.setMaxPoolSize(logThreadConfigProperties.getMaxPoolSize());
@@ -30,6 +33,7 @@ public class LogAsyncConfiguration implements AsyncConfigurer {
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         executor.setThreadNamePrefix("日志处理异步线程池-");
         executor.initialize();
+        log.info("Initialize thread pool complete");
         return executor;
     }
 }

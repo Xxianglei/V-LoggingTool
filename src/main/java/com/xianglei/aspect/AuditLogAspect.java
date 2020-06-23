@@ -57,7 +57,7 @@ public class AuditLogAspect {
 
     @Before("annotation()")
     public void before() {
-        log.info("audit log before advice start");
+        log.info("Log pre interceptor on");
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         // 获取用户IP
         String ip = getIpAddr(request);
@@ -69,12 +69,12 @@ public class AuditLogAspect {
             userName = (String) session.getAttribute("userName");
             USER_NAME_LOCAL.set(userName);
         }
-        log.info("audit log before advice end");
+        log.info("Log pre interceptor end");
     }
 
     // 对注解进行后置返回增强
     @AfterReturning(pointcut = "annotation()", returning = "rc")
-    public void doAfterReturning(JoinPoint pjp, CommonResponse rc) throws Throwable {
+    public void doAfterReturning(JoinPoint pjp, CommonResponse rc)  {
         try {
             MethodSignature ms = (MethodSignature) pjp.getSignature();
             Method method = ms.getMethod();
@@ -107,6 +107,8 @@ public class AuditLogAspect {
                     }
                 }
                 logService.saveLocalOrMysqlOrMQ(auditLog);
+            }else{
+                log.info("Please set the controller return value to commonresponse ");
             }
         } catch (Exception e) {
             log.error("Error occured while auditing, cause by: ", e);

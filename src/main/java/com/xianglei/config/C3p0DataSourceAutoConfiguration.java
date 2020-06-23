@@ -1,6 +1,7 @@
 package com.xianglei.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -17,6 +18,7 @@ import javax.sql.DataSource;
  * com.xianglei.config
  * @Description:
  */
+@Slf4j
 @Configuration
 @ConditionalOnClass(DataSource.class)
 @EnableConfigurationProperties(C3P0DataSourceProperties.class)
@@ -28,6 +30,7 @@ public class C3p0DataSourceAutoConfiguration {
     @Bean("c3p0Pool")
     @ConditionalOnMissingBean
     public DataSource dataSource() throws Exception {
+        log.info("Start initializing c3p0 connection pool......");
         // 创建一个 c3p0 的连接池
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         dataSource.setDriverClass(dataSourceProperties.getDriver());
@@ -47,6 +50,7 @@ public class C3p0DataSourceAutoConfiguration {
         dataSource.setAcquireRetryAttempts(dataSourceProperties.getAcquireRetryAttempts());
         dataSource.setBreakAfterAcquireFailure(dataSourceProperties.isBreakAfterAcquireFailure());
         dataSource.setTestConnectionOnCheckout(dataSourceProperties.isTestConnectionOnCheckout());
+        log.info("Initialization of c3p0 connection pool completed");
         return dataSource;
     }
 }

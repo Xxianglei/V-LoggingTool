@@ -351,11 +351,11 @@ public class FileUtils {
     /**
      * 字符串写入到文件 24 小时内日志在同一个文件
      *
-     * @param content        字符串内容
-     * @param filePath       路径
-     * @param append         true是往文件后追加，false是覆盖
+     * @param content  字符串内容
+     * @param filePath 路径
+     * @param append   true是往文件后追加，false是覆盖
      */
-    public static void writeContentToFile(String content, String filePath, boolean append) {
+    public static void writeContentToFile(String content, String filePath, boolean append) throws RuntimeException{
         // 获取最后一个分割线的下表
         int lastIndexOf = filePath.lastIndexOf(File.separator);
         String tempPath = filePath.substring(0, lastIndexOf);
@@ -383,8 +383,7 @@ public class FileUtils {
             out.flush();
             out.close();
         } catch (IOException e) {
-            System.out.println("Content writing failed!");
-            e.printStackTrace();
+            throw new RuntimeException("File's content writing failed!",e);
         }
     }
 
@@ -511,7 +510,7 @@ public class FileUtils {
      * @param storeFilePath
      * @return
      */
-    public static String getOsInfoAndMkdir(String storeFilePath) {
+    public static String getOsInfoAndMkdir(String storeFilePath) throws RuntimeException {
         // 获取操作系统名称
         String osName = SystemRecognizeUtils.getOSName().toLowerCase();
         if (osName.startsWith(OsDefaultEnum.WINDOWS.getInfo())) {
@@ -524,7 +523,10 @@ public class FileUtils {
             }
         }
         // 根据路径判断是否存在  不存在就创建该存储路径
-        FileUtils.createDir(storeFilePath);
+        boolean dir = FileUtils.createDir(storeFilePath);
+        if(!dir){
+            throw new RuntimeException("File path creation failed, illegal file path");
+        }
         return storeFilePath;
     }
 }
