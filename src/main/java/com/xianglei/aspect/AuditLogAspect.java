@@ -97,7 +97,7 @@ public class AuditLogAspect {
                 String module = vLogHunter.module().toString();
                 // 如果是全局异常中注入则直接获取异常信息   XXX操作失败xxx错误
                 if (VLogHunter.Module.ControllerAdvice.toString().equals(module)) {
-                    auditLog.setDetails(details + FAILS + rc.getMsg());
+                    auditLog.setDetails(details + FAILS + rc.getMessage());
                 } else {
                     // 注入模块的功能描述信息  xxx操作成功/失败
                     if (code == ErrCodeEnum.SUCCESS.getCode()) {

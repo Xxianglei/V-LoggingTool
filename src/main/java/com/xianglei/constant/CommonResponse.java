@@ -17,68 +17,68 @@ public class CommonResponse<T> {
      * 请求状态码(成功/错误码)
      */
     @JsonProperty("code")
-    private int code;
+    protected int code;
     /**
      * 请求状态或失败原因描述
      */
-    @JsonProperty("msg")
-    private String msg;
+    @JsonProperty("message")
+    protected String message;
     /**
      * 返回与请求的对应的信息
      */
     @JsonProperty("data")
-    private Object data;
+    protected T data;
 
     public CommonResponse() {
         this.code = ErrCodeEnum.SUCCESS.getCode();
-        this.msg = ErrCodeEnum.SUCCESS.getMsg();
+        this.message = ErrCodeEnum.SUCCESS.getMsg();
     }
 
     public CommonResponse(ErrCodeEnum error) {
         this.code = error.getCode();
-        this.msg = error.getMsg();
+        this.message = error.getMsg();
     }
 
     public CommonResponse(ErrCodeEnum error, T data) {
         this.code = error.getCode();
-        this.msg = error.getMsg();
+        this.message = error.getMsg();
         this.data = data;
     }
 
-    public CommonResponse(int code, String msg) {
+    public CommonResponse(int code, String message) {
         this.code = code;
-        this.msg = msg;
+        this.message = message;
     }
 
-    public CommonResponse(int code, String msg, T data) {
+    public CommonResponse(int code, String message, T data) {
         this.code = code;
-        this.msg = msg;
+        this.message = message;
         this.data = data;
     }
 
     public void setValue(int code, String msg) {
 
         this.code = code;
-        this.msg = msg;
+        this.message = msg;
     }
 
     public void setValue(int code, String msg, T data) {
 
         this.code = code;
-        this.msg = msg;
+        this.message = msg;
         this.data = data;
     }
 
     public void setValue(ErrCodeEnum CodeEnum) {
 
         this.code = CodeEnum.getCode();
-        this.msg = CodeEnum.getMsg();
+        this.message = CodeEnum.getMsg();
     }
 
     public void setValue(ErrCodeEnum codeEnum, T data) {
 
         this.code = codeEnum.getCode();
-        this.msg = codeEnum.getMsg();
+        this.message = codeEnum.getMsg();
         this.data = data;
     }
 }
