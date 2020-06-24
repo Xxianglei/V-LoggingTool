@@ -524,9 +524,6 @@ public class FileUtils {
         }
         // 根据路径判断是否存在  不存在就创建该存储路径
         boolean dir = FileUtils.createDir(storeFilePath);
-        if(!dir){
-            throw new RuntimeException("File path creation failed, illegal file path");
-        }
         return storeFilePath;
     }
 }

@@ -84,23 +84,22 @@ V-LoggingTool 1.0版本，基于自动配置和AOP技术，实现低侵入的用
 v-log:
   file:
 # 是否开启本地文件存储 默认 false
-    file-open: true
+    fileOpen: true
 # 是否发送消息到RocketMQ
-    mq-open: true  默认 false
+    mqOpen: false
 # 文件格式（文件命名规则）
-    name-format: yyyyMMddHHmmss
+    nameFormat: yyyyMMddHHmmss
 # 文件格式（仅支持文本文件）
-    ext-name: .txt
+    extName: .txt
 # 日志文件存储路径（支持linux，windows） 默认 C:\\logs 或 /usr/local
-    store-file-path: D:\\logs
-# 线程池配置
+    storeFilePath: D:\\logs
   thread:
-# 核心线程数
-    core-pool-size: 1
+# 线程池配置
+    corePoolSize: 1
 # 最大线程数
-    max-pool-size: 5
+    maxPoolSize: 5
 # 线程池队列大小
-    queue-capacity: 10 
+    queueCapacity: 10
 ```
 如果开启了mq-open: true,你需要配置MQ的相关配置项目如下：
 ```yaml

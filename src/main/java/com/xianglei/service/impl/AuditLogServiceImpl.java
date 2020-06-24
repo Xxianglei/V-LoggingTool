@@ -13,6 +13,7 @@ import com.xianglei.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -36,13 +37,14 @@ public class AuditLogServiceImpl extends ServiceImpl<AuditLogMapper, AuditLog> i
     LogCommonConfigProperties logCommonConfigProperties;
     @Autowired
     AuditLogMapper auditLogMapper;
+    @Qualifier("myRocketMQ")
     @Autowired
     RocketMQTemplate rocketMQTemplate;
 
     // 异步调用
     @Async("VLogThreadPool")
     @Override
-    public void saveLocalOrMysqlOrMQ(AuditLog auditLog){
+    public void saveLocalOrMysqlOrMQ(AuditLog auditLog) {
         boolean fileOpen = logCommonConfigProperties.isFileOpen();
         boolean mqOpen = logCommonConfigProperties.isMqOpen();
         // 存到数据库
@@ -73,8 +75,8 @@ public class AuditLogServiceImpl extends ServiceImpl<AuditLogMapper, AuditLog> i
                     .append("日志详情:").append(auditLog.getDetails()).append("  ")
                     .append("操作时间:").append(auditLog.getOperationTime()).append("\n");
             FileUtils.writeContentToFile(content.toString(), storeFilePath, true);
-        }catch (RuntimeException e){
-            log.error("Error in local file store {}",e);
+        } catch (RuntimeException e) {
+            log.error("Error in local file store {}", e);
         }
 
     }
