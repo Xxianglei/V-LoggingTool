@@ -60,6 +60,12 @@
             <artifactId>hutool-core</artifactId>
             <version>4.1.12</version>
         </dependency>
+        <!-- C3P0连接池 默认支持-->
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.5.3</version>
+        </dependency>
         <!--mybatis plus-->
         <dependency>
             <groupId>com.baomidou</groupId>
