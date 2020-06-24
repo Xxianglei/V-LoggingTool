@@ -1,6 +1,6 @@
 ### V-LoggingTool
 
-V-LoggingTool 1.0版本，基于自动配置和AOP技术，实现低侵入的用户操作的拦截、存储、分发功能。欢迎 start / fork！
+V-LoggingTool 1.0版本，基于自动配置和AOP技术，实现低侵入的用户操作的拦截、存储、分发功能。欢迎 <em>**start / fork！**</em>
 
 
 ### 目的意义
@@ -46,7 +46,7 @@ V-LoggingTool 1.0版本，基于自动配置和AOP技术，实现低侵入的用
   - 返回值必须是  CommonResponse \<T>
   - 需要在session中需要存储当前访问用户的userName属性，该值会作为入库的用户名，否则为null
     
-对于已存在的不足点后期会**持续跟进和改善代码逻辑**，如果你目前无法接受就只能移步其他仓库。
+对于已存在的不足点后期会**持续跟进和改善代码逻辑**，如果你目前无法接受就只能移步其他仓库。目前支持Mysql5.0及以上版本，请注意版本兼容性。
 
 ### 使用说明
 
@@ -134,7 +134,7 @@ rocketmq:
     <properties>
         <java.version>1.8</java.version>
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
-        <mysql.version>8.0.16</mysql.version>
+        <mysql.version>5.0.7</mysql.version>
     </properties>
     <dependencies>
         <dependency>
@@ -145,12 +145,6 @@ rocketmq:
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.1.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -176,12 +170,7 @@ rocketmq:
             <optional>true</optional>
             <version>${mybatis-plus.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.mchange</groupId>
-            <artifactId>c3p0</artifactId>
-            <version>0.9.5.3</version>
-        </dependency>
-        <!--引入我的jar-->
+        <!--引入我的jar 默认集成C3P0连接池-->
         <dependency>
             <groupId>com.github</groupId>
             <artifactId>log-capture-tool</artifactId>
@@ -214,7 +203,7 @@ rocketmq:
 @ComponentScan(basePackages = {"com.example.demo", "com.xianglei"})
 ```
 - 手动开启异步线程池
-本依赖中已经继承了线程池，你如果需要开启异步处理，只需在主类注入 **@EnableAsync**
+本依赖中已经集成了线程池，你如果需要开启异步处理，只需在主类注入 **@EnableAsync**
 - 日志捕捉注解使用
 
 返回给前端JSON格式数据，请默认使用CommonResponse封装，AOP会根据其Code值进行处理。
@@ -245,5 +234,6 @@ CREATE TABLE `audit_log` (
   PRIMARY KEY (`flow_id`)
 ) ;
 ```
-### 注意
-- 目前依赖中采用的Mysql版本是8.0以上，请注意版本兼容。
+
+#### Fixed 
+- Mysql多版本支持
