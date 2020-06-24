@@ -37,7 +37,6 @@ public class AuditLogServiceImpl extends ServiceImpl<AuditLogMapper, AuditLog> i
     LogCommonConfigProperties logCommonConfigProperties;
     @Autowired
     AuditLogMapper auditLogMapper;
-    @Qualifier("myRocketMQ")
     @Autowired
     RocketMQTemplate rocketMQTemplate;
 
