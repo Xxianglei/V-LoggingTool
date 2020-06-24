@@ -101,7 +101,7 @@ v-log:
 # 线程池队列大小
     queueCapacity: 10
 ```
-如果开启了mq-open: true,你需要配置MQ的相关配置项目如下：
+你还需要配置MQ的相关配置项目如下，如果开启了mq-open: true,日志消息将会发送到MQ
 ```yaml
 rocketmq:
   name-server: 你的IP:9876
