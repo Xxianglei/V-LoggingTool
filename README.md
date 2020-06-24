@@ -175,6 +175,11 @@ rocketmq:
             <artifactId>log-capture-tool</artifactId>
             <version>1.0.0</version>
         </dependency>
+       <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <version>2.0.3</version>
+        </dependency>
     </dependencies>
 
     <build>
