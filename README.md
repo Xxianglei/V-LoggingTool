@@ -98,14 +98,14 @@ v-log:
 # 核心线程数
     core-pool-size: 1
 # 最大线程数
-    max-pool-size: 5.
+    max-pool-size: 5
 # 线程池队列大小
     queue-capacity: 10 
 ```
 如果开启了mq-open: true,你需要配置MQ的相关配置项目如下：
 ```yaml
 rocketmq:
-  name-server: 120.26.184.125:9876
+  name-server: 你的IP:9876
   producer:
     group: log-group
 # 可自定义配置 默认 v-log-topic
@@ -134,7 +134,7 @@ rocketmq:
     <properties>
         <java.version>1.8</java.version>
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
-        <mysql.version>5.0.7</mysql.version>
+        <mysql.version>8.0.16</mysql.version>
     </properties>
     <dependencies>
         <dependency>
